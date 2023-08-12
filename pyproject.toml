@@ -7,7 +7,18 @@ name = "python-package-template"
 version = "0.0.1"
 description = "Cookiecutter template for Python cli/packages"
 authors = [{ email = "alexchay@gmail.com" }, { name = "Alexander Chaikovsky" }]
-
+# Pypi classifiers: https://pypi.org/classifiers/
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+]
 readme = "README.md"
 keywords = [
     "python",
@@ -93,6 +104,7 @@ types-setuptools = "*"
 pre-commit = "^3.3.1"
 tox = "^4.6.2"
 cookiecutter = "^2.1.1"
+build = "^0.10.0"
 
 
 [tool.poetry.group.docs]

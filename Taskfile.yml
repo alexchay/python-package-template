@@ -63,6 +63,7 @@ tasks:
     desc: Build wheels
     cmds:
       - poetry build
+      # - pyproject-build
 
   run:
     desc: Run the main application

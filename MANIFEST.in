@@ -1,0 +1,8 @@
+# includes all files from the src/ directory . . .
+graft src
+# except __pycache__ directories or files that end in .pyc, .pyo, or .pyd
+recursive-exclude __pycache__ *.py[cod]
+include *.md
+include requirements.txt
+include LICENSE
+recursive-include tests/ *
