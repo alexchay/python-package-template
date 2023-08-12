@@ -1,0 +1,198 @@
+# https://taskfile.dev
+version: "3"
+
+vars:
+  CODE_DIRS: src/ tests/
+  PYTHON_VERSION: 3.10
+
+tasks:
+  default:
+    cmds:
+      - poetry env info
+    silent: true
+
+  install:
+    desc: Install required dependencies
+    cmds:
+      - poetry install --with dev --with test --with doc
+      - task: export
+
+  install_only_main:
+    desc: Install required dependencies
+    cmds:
+      - poetry install --only main
+      - task: export
+
+  install_with_dev:
+    desc: Install required dependencies
+    cmds:
+      - poetry install --with dev
+
+  install_with_test:
+    desc: Install required dependencies
+    cmds:
+      - poetry install --with test
+
+  install_with_doc:
+    desc: Install required dependencies
+    cmds:
+      - poetry install --with doc
+
+  clean:
+    desc: Clean up the installed dependencies
+    cmds:
+      - rm -rf .venv
+
+  reinstall:
+    desc: Clean up and reinstall required dependencies
+    cmds:
+      - task: clean
+      - task: install
+
+  update:
+    desc: Update dependencies
+    cmds:
+      - poetry update
+
+  export:
+    desc: Export dependencies
+    cmds:
+      - poetry export -f requirements.txt --output requirements.txt --without-hashes --only main
+
+  build:
+    desc: Build wheels
+    cmds:
+      - poetry build
+
+  run:
+    desc: Run the main application
+    cmds:
+      - poetry run python-package
+
+  publish:
+    desc: Build and publish wheels and sdist to PyPi
+    cmds:
+      - poetry publish --build -u __token__ -p ${PYPI_TOKEN}
+
+  pytest:
+    desc: Run tests
+    cmds:
+      - poetry run pytest tests -vv -s --lf -x -l --import-mode prepend --disable-pytest-warnings --cov=src --cov-report=term-missing --cov-report=html --cov-report=xml --cov-fail-under=80 --cov-branch
+
+  tox:
+    desc: Run tox
+    cmds:
+      - poetry run tox -v --parallel auto
+      # - poetry run tox -- -vv -s --lf -x -l --cov=src --cov-report=term-missing --cov-report=html --cov-report=xml --cov-fail-under=80 --cov-branch
+
+  tox-typecheck:
+    desc: Run tox testenv typecheck
+    cmds:
+      - poetry run tox -v -e typecheck
+
+  tox-format:
+    desc: Run tox testenv format
+    cmds:
+      - poetry run tox -v -e format
+
+  tox-lint:
+    desc: Run tox testenv line
+    cmds:
+      - poetry run tox -v -e lint
+
+  tox-all:
+    desc: Run tox all test environments
+    cmds:
+      - poetry run tox -v -e py39,py310,typecheck,format,lint --parallel
+
+
+  mypy:
+    desc: Run static type checker mypy
+    cmds:
+      - poetry run mypy --ignore-missing-imports {{.CODE_DIRS}}
+
+  black:
+    desc: Run code formatter
+    cmds:
+      - poetry run black {{.CODE_DIRS}} --diff
+
+  black-check:
+    desc: Verify code formatting
+    cmds:
+      - poetry run black {{.CODE_DIRS}} --check --diff
+
+  flake8:
+    desc: Run linter flake8
+    cmds:
+      - poetry run flake8 {{.CODE_DIRS}}
+
+  pylint:
+    desc: Lint the codebase
+    cmds:
+      - poetry run pylint {{.CODE_DIRS}}
+
+  ruff:
+    desc: Run linter Ruff
+    cmds:
+      - poetry run ruff check {{.CODE_DIRS}}
+
+  ruff-fix:
+    desc: Run linter Ruff
+    cmds:
+      - poetry run ruff check --fix {{.CODE_DIRS}}
+
+  static-analysis:
+    desc: Run code formatter check, linting, static type analysis
+    cmds:
+      - task: black-check
+      - task: flake8
+      - task: mypy
+      - task: ruff
+
+  build-docs:
+    desc: Build docs
+    cmds:
+      - poetry run mkdocs build --clean --strict
+
+  publish-docs:
+    desc: Publish docs to GitHub Pages
+    cmds:
+      - poetry run mkdocs gh-deploy --force
+
+  test-docs:
+    desc: Verify links in the docs
+    cmds:
+      - PATH=$PATH:. command -v htmltest >/dev/null 2>&1 || { curl https://htmltest.wjdp.uk | bash -s -- -b .; }
+      - PATH=$PATH:. htmltest -c docs/htmltest.yml
+
+  build-test-docs:
+    desc: Build and test link in the docs
+    cmds:
+      - task: build-docs
+      - task: test-docs
+
+  test-suite:
+    desc: Run all tests
+    cmds:
+      - task: static-analysis
+      - task: pytest
+
+  bump-calver:
+    desc: Bump Cal version
+    cmds:
+      - ./bump_calver_build.sh
+
+  bump-semver:
+    desc: Bump Sem version
+    cmds:
+      - ./bump_semver_patch.sh
+
+  bump-semver-patch:
+    desc: Bump Patch of SemVer
+    cmds:
+      - cz bump --increment PATCH
+
+  bump-semver-minor:
+    desc: Bump Minor of SemVer
+    cmds:
+      - cz bump --increment MINOR
