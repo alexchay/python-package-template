@@ -138,10 +138,11 @@ doctest_optionflags = [
 ]
 # Extra options:
 addopts = [
+    "-vv",
+    "--import-mode=prepend",
+    "--disable-pytest-warnings",
     "--strict-markers",
     "--tb=short",
-    "--doctest-modules",
-    "--doctest-continue-on-failure",
 ]
 # addopts = [
 #     "--disable-pytest-warnings",

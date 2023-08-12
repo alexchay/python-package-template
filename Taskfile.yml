@@ -77,7 +77,7 @@ tasks:
   pytest:
     desc: Run tests
     cmds:
-      - poetry run pytest tests -vv -s --lf -x -l --import-mode prepend --disable-pytest-warnings --cov=src --cov-report=term-missing --cov-report=html --cov-report=xml --cov-fail-under=80 --cov-branch
+      - poetry run pytest tests -vv -s --lf -x -l --import-mode prepend --cov=src --cov-report=term-missing --cov-report=html --cov-report=xml --cov-fail-under=80 --cov-branch
 
   tox:
     desc: Run tox
