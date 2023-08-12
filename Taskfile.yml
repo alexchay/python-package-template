@@ -199,6 +199,12 @@ tasks:
       - task: static-analysis
       - task: pytest
 
+  pre-commit-install:
+    desc: Install pre-commit hooks
+    cmds:
+      - poetry run pre-commit install
+      - poetry run pre-commit install --hook-type commit-msg
+
   bump-calver:
     desc: Bump Cal version
     cmds:
