@@ -3,13 +3,34 @@ version: "3"
 
 vars:
   CODE_DIRS: src/ tests/
+  PYTHON: python3
   PYTHON_VERSION: 3.10
+
 
 tasks:
   default:
     cmds:
       - poetry env info
     silent: true
+
+  poetry-install:
+    desc: Install poetry
+    cmds:
+      - curl -sSL https://install.python-poetry.org | POETRY_HOME=$HOME/.poetry {{PYTHON}} -
+      - poetry config virtualenvs.prefer-active-python true --local
+      - poetry --version
+
+  poetry-remove:
+    desc: Remove poetry
+    cmds:
+      - curl -sSL https://install.python-poetry.org | POETRY_HOME=$HOME/.poetry {{PYTHON}} - --uninstall
+
+  poetry-update:
+    desc: Update poetry
+    cmds:
+      - poetry --version
+      - poetry self update
+      - poetry --version
 
   install:
     desc: Install required dependencies
@@ -110,7 +131,7 @@ tasks:
   mypy:
     desc: Run static type checker mypy
     cmds:
-      - poetry run mypy --ignore-missing-imports {{.CODE_DIRS}}
+      - poetry run mypy --install-types --non-interactive --ignore-missing-imports {{.CODE_DIRS}}
 
   black:
     desc: Run code formatter
