@@ -1,5 +1,4 @@
 import os
-import sys
 from unittest.mock import patch
 from package_name.main import main
 
@@ -20,4 +19,3 @@ def test_main(capsys):
         main()
         captured = capsys.readouterr()
         assert "prod" in captured.out
-
