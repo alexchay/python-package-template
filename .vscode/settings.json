@@ -1,0 +1,39 @@
+{
+    // Python
+    "[python]": {
+        "editor.formatOnPaste": false,
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "ms-python.python",
+        "editor.rulers": [
+            150
+        ],
+        "editor.tabSize": 4,
+        "editor.wordWrap": "on",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.ruff": false,
+            "source.organizeImports.ruff": true
+            // "source.fixAll": true,
+            // "source.organizeImports": true
+        }
+    },
+    "python.formatting.provider": "black",
+    "python.formatting.blackArgs": [
+        "--line-length=140",
+        "--skip-string-normalization"
+    ],
+    "python.envFile": ".env",
+    "python.defaultInterpreterPath": ".venv/bin/python",
+    "python.formatting.blackPath": ".venv/bin/black",
+    "python.linting.mypyPath": ".venv/bin/mypy",
+    "python.linting.pylintPath": ".venv/bin/pylint",
+    "python.sortImports.path": ".venv/bin/isort",
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true,
+    "python.linting.lintOnSave": true,
+    "python.linting.maxNumberOfProblems": 50,
+    "python.linting.pylintArgs": [
+        "--disable=C0114",
+        "--disable=C0301",
+        "--max-line-length=140"
+    ]
+}
