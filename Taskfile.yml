@@ -35,7 +35,7 @@ tasks:
   install:
     desc: Install required dependencies
     cmds:
-      - poetry install --with dev --with test --with doc
+      - poetry install --with dev --with test --with docs
       - task: export
 
   install_only_main:
@@ -54,10 +54,10 @@ tasks:
     cmds:
       - poetry install --with test
 
-  install_with_doc:
+  install_with_docs:
     desc: Install required dependencies
     cmds:
-      - poetry install --with doc
+      - poetry install --with docs
 
   clean:
     desc: Clean up the installed dependencies
