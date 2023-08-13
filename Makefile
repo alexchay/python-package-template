@@ -88,5 +88,29 @@ pytestcache-remove:
 build-remove:
 	rm -rf build/
 
+.PHONY: bump-version-minor
+bump-version-minor:
+	cz bump --increment MINOR
+
+.PHONY: bump-version-major
+bump-version-major:
+	cz bump --increment MAJOR
+
+.PHONY: bump-version-patch
+bump-version-patch:
+	cz bump --increment PATCH
+
+.PHONY: bump-specific-version
+bump-specific-version:
+  cz bump $(VERSION)
+
+.PHONY: fetch-tags
+fetch-tags:
+	git fetch --tags
+
+.PHONY: push-tags
+push-tags: fetch-tags
+    git push --follow-tags origin master
+
 .PHONY: cleanup
 cleanup: pycache-remove dsstore-remove mypycache-remove ipynbcheckpoints-remove pytestcache-remove
