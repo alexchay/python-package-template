@@ -1,12 +1,6 @@
 # https://taskfile.dev
 version: "3"
 
-vars:
-  CODE_DIRS: src/ tests/
-  PYTHON: python3
-  PYTHON_VERSION: 3.10
-
-
 tasks:
 
   version:
@@ -14,26 +8,31 @@ tasks:
     cmds:
       - poetry --version
 
-  show_env_info:
+  env-info:
     desc: Show poetry environment info
     cmds:
       - poetry env info
 
-  install:
+  bin-install:
     desc: Install poetry
     cmds:
       - curl -sSL https://install.python-poetry.org | POETRY_HOME=$HOME/.poetry {{.PYTHON}} -
       - poetry config virtualenvs.prefer-active-python true --local
       - poetry --version
 
-  remove:
+  bin-remove:
     desc: Remove poetry
     cmds:
       - curl -sSL https://install.python-poetry.org | POETRY_HOME=$HOME/.poetry {{.PYTHON}} - --uninstall
 
-  update:
+  bin-update:
     desc: Update poetry
     cmds:
       - poetry --version
       - poetry self update
       - poetry --version
+
+  install-with-test:
+    desc: Install required dependencies
+    cmds:
+      - poetry install --with test

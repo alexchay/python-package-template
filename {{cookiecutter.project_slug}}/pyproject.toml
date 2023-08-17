@@ -1,7 +1,4 @@
-
-
 {% if cookiecutter.use_poetry %}
-
 # Poetry pyproject.toml: https://python-poetry.org/docs/pyproject/
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -16,7 +13,6 @@ readme = "README.md"
 license = "MIT"
 repository = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_name }}"
 homepage = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_name }}"
-
 
 # Keywords description https://python-poetry.org/docs/pyproject/#keywords
 keywords = [
@@ -40,7 +36,6 @@ classifiers = [
 ]
 packages = [{ include = "{{ cookiecutter.project_slug }}", from = "src" }]
 
-
 [tool.poetry.scripts]
 "{{ cookiecutter.project_name }}" = "{{ cookiecutter.project_slug }}.main:main"
 
@@ -49,13 +44,72 @@ packages = [{ include = "{{ cookiecutter.project_slug }}", from = "src" }]
 [tool.poetry.dependencies]
 python = "^{{ cookiecutter.minimal_python_version }}"
 
-
-[tool.poetry.dev-dependencies]
-
-
+[tool.poetry.group.dev]
+# poetry install --with dev
+optional = true
+[tool.poetry.group.dev.dependencies]
 {% endif %}
 
+{% if cookiecutter.use_poetry and cookiecutter.use_pytest %}
+[tool.poetry.group.test]
+# poetry install --with test
+optional = true
+[tool.poetry.group.test.dependencies]
+pytest = "*"
+pytest-asyncio = "*"
+pytest-html = "^3.1.1"
+pytest-cov = "^3.0.0"
+pytest-custom-exit-code = "*"
+pytest-randomly = "^3.13.0"
+coverage = "^6.1.2"
+coverage-badge = "^1.1.0"
+{% endif %}
 
+{% if cookiecutter.use_pytest %}
+[tool.pytest.ini_options]
+# https://docs.pytest.org/en/6.2.x/customize.html#pyproject-toml
+# Extra options:
+# https://docs.pytest.org/en/6.2.x/reference.html#configuration-options
+addopts = [
+    "-vv",
+    "--import-mode=prepend",
+    "--disable-pytest-warnings",
+    "--strict-markers",
+    "--tb=short",
+]
+testpaths = ["tests"]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "mymarker: my custom marker",
+]
+# Directories that are not visited by pytest collector:
+norecursedirs = [
+    "hooks",
+    "*.egg",
+    ".eggs",
+    "dist",
+    "build",
+    "docs",
+    ".tox",
+    ".git",
+    "__pycache__",
+]
+doctest_optionflags = [
+    "NUMBER",
+    "NORMALIZE_WHITESPACE",
+    "IGNORE_EXCEPTION_DETAIL",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["src", "tests"]
+
+[tool.coverage.report]
+fail_under = 70
+show_missing = true
+skip_covered = true
+
+{% endif %}
 
 homepage = "https://python-poetry.org/"
 documentation = "https://python-poetry.org/docs/"

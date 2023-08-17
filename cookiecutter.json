@@ -10,6 +10,7 @@
     "add_vscode_settings": false,
     "use_gotask": false,
     "use_poetry": true,
+    "use_pytest": true,
     "minimal_python_version": [
         3.8,
         3.9,

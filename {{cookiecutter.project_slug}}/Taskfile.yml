@@ -6,10 +6,14 @@ vars:
   PYTHON: python3
   PYTHON_VERSION: 3.10
 
-{% if cookiecutter.use_poetry %}
 includes:
+{%- if cookiecutter.use_poetry %}
   poetry:
     taskfile: ./taskfiles/poetry.yml
+{% endif %}
+{%- if cookiecutter.use_pytest %}
+  pytest:
+    taskfile: ./taskfiles/pytest.yml
 {% endif %}
 
 tasks:
@@ -17,10 +21,25 @@ tasks:
     desc: Check bash version
     cmds:
       - bash --version
-
 {% if cookiecutter.use_poetry %}
   default:
     cmds:
       - task: poetry:version
     silent: true
+{% endif %}
+
+  static-analysis:
+    desc: Run code formatter check, linting, static type analysis
+    cmds:
+      # - task: black-check
+      # - task: flake8
+      # - task: mypy
+      # - task: ruff
+
+{% if cookiecutter.use_pytest %}
+  test-suite:
+    desc: Run all tests
+    cmds:
+      - task: static-analysis
+      - task: pytest:all-cov
 {% endif %}
