@@ -17,6 +17,7 @@ REMOVE_PATHS = [
     "{% if cookiecutter.use_gotask and not cookiecutter.use_mkdocs %} taskfiles/mkdocs.yml {% endif %}",
     "{% if cookiecutter.use_gotask and not cookiecutter.use_pylint %} taskfiles/pylint.yml {% endif %}",
     "{% if cookiecutter.use_gotask and not cookiecutter.use_pylint %} taskfiles/ruff.yml {% endif %}",
+    "{% if cookiecutter.use_gotask and not cookiecutter.use_pylint %} taskfiles/flake8.yml {% endif %}",
 ]
 
 

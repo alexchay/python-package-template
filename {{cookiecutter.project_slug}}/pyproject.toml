@@ -55,6 +55,11 @@ pylint = "^2.8.3"
 {%- if cookiecutter.use_poetry and cookiecutter.use_ruff %}
 ruff = "^0.0.270"
 {%- endif %}
+{%- if cookiecutter.use_poetry and cookiecutter.use_flake8 %}
+flake8 = "*"
+flake8-bugbear = "*"
+flake8-pyproject = "^1.2.3"
+{%- endif %}
 
 {% if cookiecutter.use_poetry and cookiecutter.use_pytest %}
 [tool.poetry.group.test]
@@ -149,4 +154,24 @@ ignore = [
 
 [tool.ruff.isort]
 known-third-party = ["fastapi", "pydantic", "starlette"]
+{%- endif %}
+
+{% if cookiecutter.use_flake8 %}
+[tool.flake8]
+max-line-length = {{ cookiecutter.max_line_length }}
+count = true
+max-complexity = 10
+select = [
+    "E", # pycodestyle errors
+    "W", # pycodestyle warnings
+    "F", # pyflakes
+    "I", # isort
+    "C", # flake8-comprehensions
+    "B", # flake8-bugbear
+]
+ignore = [
+    "E501", # line too long, handled by black
+    "B008", # do not perform function calls in argument defaults
+    "C901", # too complex
+]
 {%- endif %}
