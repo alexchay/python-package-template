@@ -19,6 +19,10 @@ includes:
   pylint:
     taskfile: ./taskfiles/pylint.yml
 {% endif %}
+{%- if cookiecutter.use_mkdocs %}
+  docs:
+    taskfile: ./taskfiles/docs.yml
+{%- endif %}
 
 tasks:
   bash_version:
@@ -34,7 +38,7 @@ tasks:
   install:
     desc: Install required dependencies
     cmds:
-      - poetry install --with dev {% if cookiecutter.use_pytest %}--with test{% endif %}
+      - poetry install --with dev {% if cookiecutter.use_pytest %}--with test{% endif %} {% if cookiecutter.use_mkdocs %}--with docs{% endif %}
 
   install-only-main:
     desc: Install required dependencies

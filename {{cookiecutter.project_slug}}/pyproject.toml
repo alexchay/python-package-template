@@ -68,6 +68,15 @@ coverage = "^6.1.2"
 coverage-badge = "^1.1.0"
 {%- endif %}
 
+{% if cookiecutter.use_mkdocs %}
+[tool.poetry.group.docs]
+# poetry install --with docs
+optional = true
+[tool.poetry.group.docs.dependencies]
+mkdocs = "*"
+mkdocs-material = "*"
+{%- endif %}
+
 {% if cookiecutter.use_pytest %}
 [tool.pytest.ini_options]
 # https://docs.pytest.org/en/6.2.x/customize.html#pyproject-toml
