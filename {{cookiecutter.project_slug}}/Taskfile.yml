@@ -22,15 +22,19 @@ includes:
 {%- if cookiecutter.use_mkdocs %}
   docs:
     taskfile: ./taskfiles/docs.yml
-{%- endif %}
+{% endif %}
 {%- if cookiecutter.use_ruff %}
   ruff:
     taskfile: ./taskfiles/ruff.yml
 {%- endif %}
-{%- if cookiecutter.use_flake8 %}
+{% if cookiecutter.use_flake8 %}
   flake8:
     taskfile: ./taskfiles/flake8.yml
-{%- endif %}
+{% endif %}
+{%- if cookiecutter.use_mypy %}
+  mypy:
+    taskfile: ./taskfiles/mypy.yml
+{% endif %}
 
 tasks:
   bash_version:
@@ -109,8 +113,10 @@ tasks:
 {%- if cookiecutter.use_flake8 %}
       - task: flake8:check
 {%- endif %}
+{%- if cookiecutter.use_mypy %}
+      - task: mypy:check
+{%- endif %}
       # - task: black-check
-      # - task: mypy
 
 {%- if cookiecutter.use_pytest %}
   test-suite:

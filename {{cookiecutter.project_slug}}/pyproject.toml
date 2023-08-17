@@ -60,6 +60,12 @@ flake8 = "*"
 flake8-bugbear = "*"
 flake8-pyproject = "^1.2.3"
 {%- endif %}
+{%- if cookiecutter.use_poetry and cookiecutter.use_mypy %}
+mypy = "*"
+mypy-extensions = "^1.0.0"
+types-termcolor = "^1.1.6.2"
+types-setuptools = "*"
+{%- endif %}
 
 {% if cookiecutter.use_poetry and cookiecutter.use_pytest %}
 [tool.poetry.group.test]
@@ -174,4 +180,32 @@ ignore = [
     "B008", # do not perform function calls in argument defaults
     "C901", # too complex
 ]
+{%- endif %}
+
+{% if cookiecutter.use_mypy %}
+[tool.mypy]
+# https://mypy.readthedocs.io/en/latest/config_file.html#using-a-pyproject-toml-file
+python_version = "3.9"
+pretty = true
+show_traceback = true
+color_output = true
+allow_redefinition = false
+check_untyped_defs = true
+disallow_any_generics = true
+disallow_incomplete_defs = true
+ignore_missing_imports = true
+implicit_reexport = false
+no_implicit_optional = true
+show_column_numbers = true
+show_error_codes = true
+show_error_context = true
+strict_equality = true
+strict_optional = true
+warn_no_return = true
+warn_redundant_casts = true
+warn_return_any = true
+warn_unreachable = true
+warn_unused_configs = true
+warn_unused_ignores = true
+ignore_errors = false
 {%- endif %}
