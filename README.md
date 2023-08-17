@@ -1,3 +1,18 @@
+### Using the Defaults
+values from `cookiecutter.json` will be overridden by values from `.cookiecutterrc`
+```
+default_context:
+    full_name: "Full Name"
+    email: "me@email.com"
+    github_username: "user"
+abbreviations:
+    pp: https://github.com/audreyfeldroy/cookiecutter-pypackage.git
+    gh: https://github.com/{0}.git
+    gl: https://gl.example.com/{0}.git
+```
+
+
+
 ### Python Dependency Management With poetry
 
 ```shell
