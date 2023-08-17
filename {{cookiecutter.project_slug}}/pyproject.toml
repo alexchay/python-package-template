@@ -1,0 +1,61 @@
+
+
+{% if cookiecutter.use_poetry %}
+
+# Poetry pyproject.toml: https://python-poetry.org/docs/pyproject/
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "{{ cookiecutter.project_name }}"
+version = "{{ cookiecutter.version }}"
+description = "{{ cookiecutter.project_description }}"
+authors = ["{{ cookiecutter.full_name }} <{{ cookiecutter.email }}>"]
+readme = "README.md"
+license = "MIT"
+repository = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_name }}"
+homepage = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_name }}"
+
+
+# Keywords description https://python-poetry.org/docs/pyproject/#keywords
+keywords = [
+    "python",
+    "package",
+    "project",
+    "template",
+    "poetry",
+    "cookiecutter",
+]
+# Pypi classifiers: https://pypi.org/classifiers/
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: {{ cookiecutter.minimal_python_version }}",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+packages = [{ include = "{{ cookiecutter.project_slug }}", from = "src" }]
+
+
+[tool.poetry.scripts]
+"{{ cookiecutter.project_name }}" = "{{ cookiecutter.project_slug }}.main:main"
+
+# main dependency group
+# poetry install --only main
+[tool.poetry.dependencies]
+python = "^{{ cookiecutter.minimal_python_version }}"
+
+
+[tool.poetry.dev-dependencies]
+
+
+{% endif %}
+
+
+
+homepage = "https://python-poetry.org/"
+documentation = "https://python-poetry.org/docs/"

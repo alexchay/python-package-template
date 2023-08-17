@@ -10,6 +10,7 @@ REMOVE_PATHS = [
     "{% if not cookiecutter.add_vscode_settings %} .vscode/ {% endif %}",
     "{% if not cookiecutter.use_gotask %} Taskfile.yml {% endif %}",
     "{% if not cookiecutter.use_gotask %} taskfiles {% endif %}",
+    "{% if not cookiecutter.use_poetry %} poetry.toml {% endif %}",
 ]
 
 

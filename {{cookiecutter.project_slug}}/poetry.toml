@@ -1,0 +1,7 @@
+[virtualenvs]
+in-project = true
+prefer-active-python = true
+prompt = ".venv(py{python_version})"
+
+[virtualenvs.options]
+always-copy = true

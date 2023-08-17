@@ -2,13 +2,19 @@
     "full_name": "Buzz Lightyear",
     "email": "bl@example.com",
     "github_username": "gh_username",
-    "project_name": "Python Package",
+    "project_name": "python-package",
     "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
-    "project_short_description": "Python Boilerplate contains all the boilerplate you need to create a Python package.",
+    "project_description": "Python Boilerplate contains all the boilerplate you need to create a Python package.",
     "pypi_username": "{{ cookiecutter.github_username }}",
     "version": "0.1.0",
     "add_vscode_settings": false,
     "use_gotask": false,
+    "use_poetry": true,
+    "minimal_python_version": [
+        3.8,
+        3.9,
+        3.10
+    ],
     "_copy_without_render": [
         "taskfiles"
     ]
