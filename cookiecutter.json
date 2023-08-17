@@ -7,5 +7,9 @@
     "project_short_description": "Python Boilerplate contains all the boilerplate you need to create a Python package.",
     "pypi_username": "{{ cookiecutter.github_username }}",
     "version": "0.1.0",
-    "add_vscode_settings": false
+    "add_vscode_settings": false,
+    "use_gotask": false,
+    "_copy_without_render": [
+        "taskfiles"
+    ]
 }

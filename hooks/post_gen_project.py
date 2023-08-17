@@ -1,11 +1,16 @@
 #!/usr/bin/env python
 
 import shutil
+import sys
 from pathlib import Path
 
 PROJECT_DIRECTORY = Path.cwd().resolve()
 
-REMOVE_PATHS = ["{% if not cookiecutter.add_vscode_settings %} .vscode/ {% endif %}"]
+REMOVE_PATHS = [
+    "{% if not cookiecutter.add_vscode_settings %} .vscode/ {% endif %}",
+    "{% if not cookiecutter.use_gotask %} Taskfile.yml {% endif %}",
+    "{% if not cookiecutter.use_gotask %} taskfiles {% endif %}",
+]
 
 
 def remove_path(path: str) -> None:
@@ -22,3 +27,8 @@ def remove_path(path: str) -> None:
 if __name__ == "__main__":
     for rm_path in REMOVE_PATHS:
         remove_path(rm_path)
+
+    # if task utility is not installed, report it and exit with error
+    if shutil.which("task") is None:
+        print("Task utility is not installed. Please install it manually. See https://taskfile.dev/installation/")
+        sys.exit(1)
