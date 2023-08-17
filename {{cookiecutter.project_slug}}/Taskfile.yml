@@ -15,6 +15,10 @@ includes:
   pytest:
     taskfile: ./taskfiles/pytest.yml
 {% endif %}
+{%- if cookiecutter.use_pylint %}
+  pylint:
+    taskfile: ./taskfiles/pylint.yml
+{% endif %}
 
 tasks:
   bash_version:
@@ -26,20 +30,76 @@ tasks:
     cmds:
       - task: poetry:version
     silent: true
-{% endif %}
+
+  install:
+    desc: Install required dependencies
+    cmds:
+      - poetry install --with dev {% if cookiecutter.use_pytest %}--with test{% endif %}
+
+  install-only-main:
+    desc: Install required dependencies
+    cmds:
+      - poetry install --only main
+      - task: export
+
+  install-dev:
+    desc: Install required dependencies
+    cmds:
+      - poetry install --with dev
+
+  clean:
+    desc: Clean up the installed dependencies
+    cmds:
+      - rm -rf .venv
+
+  reinstall:
+    desc: Clean up and reinstall required dependencies
+    cmds:
+      - task: clean
+      - task: install
+
+  update:
+    desc: Update dependencies
+    cmds:
+      - poetry update
+
+  export:
+    desc: Export dependencies
+    cmds:
+      - poetry export -f requirements.txt --output requirements.txt --without-hashes --only main
+
+  build:
+    desc: Build wheels
+    cmds:
+      - poetry build
+  run:
+    desc: Run the main application
+    cmds:
+      - poetry run python-package
+{%- endif %}
+
+{%- if cookiecutter.use_pytest %}
+  install-with-test:
+    desc: Install required dependencies
+    cmds:
+      - poetry install --with test
+{%- endif %}
 
   static-analysis:
     desc: Run code formatter check, linting, static type analysis
     cmds:
+{%- if cookiecutter.use_pylint %}
+      - task: pylint:run
+{%- endif %}
       # - task: black-check
       # - task: flake8
       # - task: mypy
       # - task: ruff
 
-{% if cookiecutter.use_pytest %}
+{%- if cookiecutter.use_pytest %}
   test-suite:
     desc: Run all tests
     cmds:
       - task: static-analysis
       - task: pytest:all-cov
-{% endif %}
+{%- endif %}

@@ -48,7 +48,10 @@ python = "^{{ cookiecutter.minimal_python_version }}"
 # poetry install --with dev
 optional = true
 [tool.poetry.group.dev.dependencies]
-{% endif %}
+{%- endif %}
+{%- if cookiecutter.use_poetry and cookiecutter.use_pylint %}
+pylint = "^2.8.3"
+{%- endif %}
 
 {% if cookiecutter.use_poetry and cookiecutter.use_pytest %}
 [tool.poetry.group.test]
@@ -63,7 +66,7 @@ pytest-custom-exit-code = "*"
 pytest-randomly = "^3.13.0"
 coverage = "^6.1.2"
 coverage-badge = "^1.1.0"
-{% endif %}
+{%- endif %}
 
 {% if cookiecutter.use_pytest %}
 [tool.pytest.ini_options]
@@ -109,7 +112,7 @@ fail_under = 70
 show_missing = true
 skip_covered = true
 
-{% endif %}
+{%- endif %}
 
 homepage = "https://python-poetry.org/"
 documentation = "https://python-poetry.org/docs/"

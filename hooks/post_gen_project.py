@@ -11,8 +11,10 @@ REMOVE_PATHS = [
     "{% if not cookiecutter.use_gotask %} Taskfile.yml {% endif %}",
     "{% if not cookiecutter.use_gotask %} taskfiles {% endif %}",
     "{% if not cookiecutter.use_poetry %} poetry.toml {% endif %}",
+    "{% if not cookiecutter.use_pylint %} .pylintrc {% endif %}",
     "{% if cookiecutter.use_gotask and not cookiecutter.use_poetry %} taskfiles/poetry.yml {% endif %}",
     "{% if cookiecutter.use_gotask and not cookiecutter.use_pytest %} taskfiles/pytest.yml {% endif %}",
+    "{% if cookiecutter.use_gotask and not cookiecutter.use_pylint %} taskfiles/pylint.yml {% endif %}",
 ]
 
 

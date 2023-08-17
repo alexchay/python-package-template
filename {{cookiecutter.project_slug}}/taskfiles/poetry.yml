@@ -31,8 +31,3 @@ tasks:
       - poetry --version
       - poetry self update
       - poetry --version
-
-  install-with-test:
-    desc: Install required dependencies
-    cmds:
-      - poetry install --with test

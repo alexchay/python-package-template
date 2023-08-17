@@ -11,6 +11,7 @@
     "use_gotask": false,
     "use_poetry": true,
     "use_pytest": true,
+    "use_pylint": false,
     "minimal_python_version": [
         3.8,
         3.9,
