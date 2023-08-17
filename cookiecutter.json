@@ -13,11 +13,13 @@
     "use_pytest": true,
     "use_mkdocs": true,
     "use_pylint": false,
+    "use_ruff": true,
     "minimal_python_version": [
         3.8,
         3.9,
         3.10
     ],
+    "max_line_length": 120,
     "_copy_without_render": [
         "taskfiles"
     ]

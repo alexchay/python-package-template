@@ -52,6 +52,9 @@ optional = true
 {%- if cookiecutter.use_poetry and cookiecutter.use_pylint %}
 pylint = "^2.8.3"
 {%- endif %}
+{%- if cookiecutter.use_poetry and cookiecutter.use_ruff %}
+ruff = "^0.0.270"
+{%- endif %}
 
 {% if cookiecutter.use_poetry and cookiecutter.use_pytest %}
 [tool.poetry.group.test]
@@ -120,8 +123,30 @@ source = ["src", "tests"]
 fail_under = 70
 show_missing = true
 skip_covered = true
-
 {%- endif %}
 
-homepage = "https://python-poetry.org/"
-documentation = "https://python-poetry.org/docs/"
+{% if cookiecutter.use_ruff %}
+[tool.ruff]
+# Increase the maximum line length to 150 characters.
+line-length = {{ cookiecutter.max_line_length }}
+src = ["src", "tests"]
+select = [
+    "E", # pycodestyle errors
+    "W", # pycodestyle warnings
+    "F", # pyflakes
+    # "I",  # isort
+    "C", # flake8-comprehensions
+    "B", # flake8-bugbear
+]
+ignore = [
+    "E501", # line too long, handled by black
+    "B008", # do not perform function calls in argument defaults
+    "C901", # too complex
+]
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.ruff.isort]
+known-third-party = ["fastapi", "pydantic", "starlette"]
+{%- endif %}

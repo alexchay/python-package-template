@@ -2,23 +2,28 @@
 version: "3"
 
 tasks:
+
   install:
     desc: Install required dependencies
     cmds:
       - poetry install --with docs
+
   build:
     desc: Build docs
     cmds:
       - poetry run mkdocs build --clean --strict
+
   publish:
     desc: Publish docs to GitHub Pages
     cmds:
       - poetry run mkdocs gh-deploy --force
+
   test:
     desc: Verify links in the docs
     cmds:
       - PATH=$PATH:. command -v htmltest >/dev/null 2>&1 || { curl https://htmltest.wjdp.uk | bash -s -- -b .; }
       - PATH=$PATH:. htmltest -c docs/htmltest.yml
+
   build-test:
     desc: Build and test link in the docs
     cmds:

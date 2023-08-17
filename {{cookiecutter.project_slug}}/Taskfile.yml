@@ -23,6 +23,10 @@ includes:
   docs:
     taskfile: ./taskfiles/docs.yml
 {%- endif %}
+{%- if cookiecutter.use_ruff %}
+  ruff:
+    taskfile: ./taskfiles/ruff.yml
+{%- endif %}
 
 tasks:
   bash_version:
@@ -95,10 +99,12 @@ tasks:
 {%- if cookiecutter.use_pylint %}
       - task: pylint:run
 {%- endif %}
+{%- if cookiecutter.use_pylint %}
+      - task: ruff:check
+{%- endif %}
       # - task: black-check
       # - task: flake8
       # - task: mypy
-      # - task: ruff
 
 {%- if cookiecutter.use_pytest %}
   test-suite:
