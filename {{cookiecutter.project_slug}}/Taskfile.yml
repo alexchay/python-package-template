@@ -39,7 +39,10 @@ includes:
   black:
     taskfile: ./taskfiles/black.yml
 {% endif %}
-
+{%- if cookiecutter.use_tox %}
+  tox:
+    taskfile: ./taskfiles/tox.yml
+{% endif %}
 
 tasks:
   bash_version:

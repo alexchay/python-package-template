@@ -69,6 +69,10 @@ types-setuptools = "*"
 {%- if cookiecutter.use_poetry and cookiecutter.use_black %}
 black = { version = "*", allow-prereleases = true }
 {%- endif %}
+{%- if cookiecutter.use_poetry and cookiecutter.use_tox %}
+tox = "^4.6.2"
+{%- endif %}
+
 
 {% if cookiecutter.use_poetry and cookiecutter.use_pytest %}
 [tool.poetry.group.test]
@@ -177,11 +181,28 @@ select = [
     "I", # isort
     "C", # flake8-comprehensions
     "B", # flake8-bugbear
+    "B950", # flake8-bugbear
 ]
 ignore = [
-    "E501", # line too long, handled by black
-    "B008", # do not perform function calls in argument defaults
-    "C901", # too complex
+    #"E501", # line too long, handled by black
+    #"B008", # do not perform function calls in argument defaults
+    #"C901", # too complex
+    #"E266", # too many leading '#' for block comment
+    #"E231", # missing whitespace after ','
+    #"E241", # multiple spaces after ','
+]
+per-file-ignores = [
+    "__init__.py: F401",
+]
+exclude = [
+    ".git",
+    ".venv",
+    ".tox",
+    "build",
+    "dist",
+    "env",
+    "venv",
+    "__pycache__"
 ]
 {%- endif %}
 
