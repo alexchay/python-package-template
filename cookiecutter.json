@@ -18,6 +18,7 @@
     "use_mypy": false,
     "use_black": true,
     "use_tox": false,
+    "use_pre_commit": true,
     "minimal_python_version": [
         3.8,
         3.9,

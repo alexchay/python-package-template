@@ -1,0 +1,5 @@
+# exclude: '.git|.tox'
+# default_stages: [commit]
+# fail_fast: true
+
+repos:

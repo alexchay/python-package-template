@@ -135,3 +135,11 @@ tasks:
       - task: static-analysis
       - task: pytest:all-cov
 {%- endif %}
+
+{% if cookiecutter.use_poetry and cookiecutter.use_pre_commit %}
+  pre-commit-install:
+    desc: Install pre-commit hooks
+    cmds:
+      - poetry run pre-commit install
+      - poetry run pre-commit install --hook-type commit-msg
+{%- endif %}
