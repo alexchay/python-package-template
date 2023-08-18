@@ -35,6 +35,11 @@ includes:
   mypy:
     taskfile: ./taskfiles/mypy.yml
 {% endif %}
+{%- if cookiecutter.use_black %}
+  black:
+    taskfile: ./taskfiles/black.yml
+{% endif %}
+
 
 tasks:
   bash_version:
@@ -94,7 +99,7 @@ tasks:
       - poetry run python-package
 {%- endif %}
 
-{%- if cookiecutter.use_pytest %}
+{% if cookiecutter.use_pytest %}
   install-with-test:
     desc: Install required dependencies
     cmds:
@@ -116,9 +121,11 @@ tasks:
 {%- if cookiecutter.use_mypy %}
       - task: mypy:check
 {%- endif %}
-      # - task: black-check
+{%- if cookiecutter.use_black %}
+      - task: black:check-dry
+{%- endif %}
 
-{%- if cookiecutter.use_pytest %}
+{% if cookiecutter.use_pytest %}
   test-suite:
     desc: Run all tests
     cmds:

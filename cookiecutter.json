@@ -16,6 +16,7 @@
     "use_ruff": true,
     "use_flake8": false,
     "use_mypy": false,
+    "use_black": true,
     "minimal_python_version": [
         3.8,
         3.9,

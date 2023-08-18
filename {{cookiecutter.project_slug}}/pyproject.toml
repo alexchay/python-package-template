@@ -66,6 +66,9 @@ mypy-extensions = "^1.0.0"
 types-termcolor = "^1.1.6.2"
 types-setuptools = "*"
 {%- endif %}
+{%- if cookiecutter.use_poetry and cookiecutter.use_black %}
+black = { version = "*", allow-prereleases = true }
+{%- endif %}
 
 {% if cookiecutter.use_poetry and cookiecutter.use_pytest %}
 [tool.poetry.group.test]
@@ -208,4 +211,28 @@ warn_unreachable = true
 warn_unused_configs = true
 warn_unused_ignores = true
 ignore_errors = false
+{%- endif %}
+
+{% if cookiecutter.use_black %}
+[tool.black]
+line-length = 140
+target-version = ["py39", "py310"]
+skip-string-normalization = true
+# color = true
+include = "\\.pyi?$"
+exclude = '''
+/(
+    \.git
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+    | env
+    | venv
+)/
+'''
 {%- endif %}
