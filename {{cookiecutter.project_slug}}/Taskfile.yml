@@ -128,18 +128,60 @@ tasks:
       - task: black:check-dry
 {%- endif %}
 
-{% if cookiecutter.use_pytest %}
   test-suite:
     desc: Run all tests
     cmds:
       - task: static-analysis
+{%- if cookiecutter.use_pytest %}
       - task: pytest:all-cov
 {%- endif %}
 
-{% if cookiecutter.use_poetry and cookiecutter.use_pre_commit %}
   pre-commit-install:
     desc: Install pre-commit hooks
     cmds:
+{%- if cookiecutter.use_poetry and cookiecutter.use_pre_commit %}
       - poetry run pre-commit install
       - poetry run pre-commit install --hook-type commit-msg
+{%- else -%}
+      - echo "Pre-commit hooks are not installed"
 {%- endif %}
+
+  init-git:
+    desc: Initialize git repository
+    cmds:
+      - git init
+      - git add LICENSE
+      - git commit -m "Initial commit"
+      - git branch -M main
+
+  init:
+    desc: Initialize project
+    cmds:
+      - task: init-git
+      - task: install
+{%- if cookiecutter.use_pre_commit %}
+      - task: pre-commit-install
+{%- endif %}
+      - task: test-suite
+      - task: build
+
+{% if cookiecutter.versioning == "semver" %}
+  bump-semver-patch:
+    desc: Bump Patch of SemVer
+    cmds:
+      - cz bump --increment PATCH
+
+  bump-semver-minor:
+    desc: Bump Minor of SemVer
+    cmds:
+      - cz bump --increment MINOR
+{%- endif %}
+
+{% if cookiecutter.versioning == "calver" %}
+  bump-calver:
+    desc: Bump Cal version
+    cmds:
+      - ./bump_calver_build.sh
+{%- endif %}
+
+

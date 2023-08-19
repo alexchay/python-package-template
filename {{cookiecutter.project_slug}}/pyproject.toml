@@ -48,6 +48,7 @@ python = "^{{ cookiecutter.minimal_python_version }}"
 # poetry install --with dev
 optional = true
 [tool.poetry.group.dev.dependencies]
+pdbpp = "*"
   {%- if cookiecutter.use_pylint %}
 pylint = "^2.8.3"
   {%- endif %}
@@ -71,8 +72,14 @@ black = { version = "*", allow-prereleases = true }
   {%- if cookiecutter.use_tox %}
 tox = "^4.6.2"
   {%- endif %}
-  {%- if cookiecutter.use_pre_commit %}
+  {%- if cookiecutter.use_pre_commit or cookiecutter.check_commit_syntax %}
 pre-commit = "^3.3.1"
+  {%- endif %}
+  {%- if cookiecutter.check_commit_syntax or cookiecutter.versioning == "semver" %}
+commitizen = "*"
+  {%- endif %}
+  {%- if cookiecutter.versioning == "calver" %}
+bump2version = "*"
   {%- endif %}
 
 
@@ -259,4 +266,15 @@ exclude = '''
     | venv
 )/
 '''
+{%- endif %}
+
+{% if cookiecutter.check_commit_syntax or cookiecutter.versioning == "semver" %}
+[tool.commitizen]
+name = "cz_conventional_commits"
+tag_format = "v$version"
+version_scheme = "pep440"
+version_provider = "{% if cookiecutter.use_poetry %}poetry{% else %}pep621{% endif %}"
+update_changelog_on_bump = true
+bump_message = "bump: version $current_version → $new_version"
+annotated_tag = false
 {%- endif %}

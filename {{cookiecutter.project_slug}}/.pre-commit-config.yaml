@@ -3,3 +3,10 @@
 # fail_fast: true
 
 repos:
+{%- if cookiecutter.check_commit_syntax %}
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v3.2.1
+    hooks:
+        - id: commitizen
+          stages: [commit-msg]
+{%- endif %}

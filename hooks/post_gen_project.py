@@ -13,6 +13,8 @@ REMOVE_PATHS = [
     "{% if not cookiecutter.use_poetry %} poetry.toml {% endif %}",
     "{% if not cookiecutter.use_pylint %} .pylintrc {% endif %}",
     "{% if not cookiecutter.use_tox %} tox.ini {% endif %}",
+    "{% if not cookiecutter.versioning == 'calver' %} .bumpversion.cfg {% endif %}",
+    "{% if not cookiecutter.versioning == 'calver' %} bump_calver_build.sh {% endif %}",
     "{% if cookiecutter.use_gotask and not cookiecutter.use_poetry %} taskfiles/poetry.yml {% endif %}",
     "{% if cookiecutter.use_gotask and not cookiecutter.use_pytest %} taskfiles/pytest.yml {% endif %}",
     "{% if cookiecutter.use_gotask and not cookiecutter.use_mkdocs %} taskfiles/mkdocs.yml {% endif %}",

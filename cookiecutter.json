@@ -6,7 +6,11 @@
     "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
     "project_description": "Python Boilerplate contains all the boilerplate you need to create a Python package.",
     "pypi_username": "{{ cookiecutter.github_username }}",
-    "version": "0.1.0",
+    "versioning": [
+        "semver",
+        "calver"
+    ],
+    "version": "{% if cookiecutter.versioning == 'calver' %}2023.01.01.0{% else %}0.1.0{% endif %}",
     "add_vscode_settings": false,
     "use_gotask": false,
     "use_poetry": true,
@@ -19,6 +23,7 @@
     "use_black": true,
     "use_tox": false,
     "use_pre_commit": true,
+    "check_commit_syntax": true,
     "minimal_python_version": [
         3.8,
         3.9,
