@@ -75,9 +75,10 @@ packages = [{ include = "package_name", from = "src" }]
 [tool.poetry.scripts]
 python-package = "package_name.main:main"
 
+
+[tool.poetry.dependencies]
 # main dependency group
 # poetry install --only main
-[tool.poetry.dependencies]
 python = "^3.9"
 colorama = "^0.4.6"
 

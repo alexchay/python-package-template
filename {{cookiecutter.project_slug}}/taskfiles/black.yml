@@ -5,10 +5,10 @@ tasks:
   check:
     desc: Run code formatter
     cmds:
-      - poetry run black {{.CODE_DIRS}} --diff
+      - set -x && {{.SET_VENV}} black {{.CODE_DIRS}} --diff
 
   check-dry:
     desc: Verify code formatting
     cmds:
-      - poetry run black {{.CODE_DIRS}} --check --diff
+      - set -x && {{.SET_VENV}} black {{.CODE_DIRS}} --check --diff
 

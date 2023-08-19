@@ -5,9 +5,9 @@ tasks:
   check:
     desc: Run linter Ruff
     cmds:
-      - poetry run ruff check {{.CODE_DIRS}}
+      - set -x && {{.SET_VENV}} ruff check {{.CODE_DIRS}}
 
   check-fix:
     desc: Run linter Ruff
     cmds:
-      - poetry run ruff check --fix {{.CODE_DIRS}}
+      - set -x && {{.SET_VENV}} ruff check --fix {{.CODE_DIRS}}

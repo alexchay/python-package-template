@@ -10,9 +10,11 @@ REMOVE_PATHS = [
     "{% if not cookiecutter.add_vscode_settings %} .vscode/ {% endif %}",
     "{% if not cookiecutter.use_gotask %} Taskfile.yml {% endif %}",
     "{% if not cookiecutter.use_gotask %} taskfiles {% endif %}",
-    "{% if not cookiecutter.use_poetry %} poetry.toml {% endif %}",
+    "{% if not cookiecutter.use_poetry %} poetry.toml {% else %} requirements_dev.txt {% endif %}",
+    "{% if cookiecutter.use_poetry %} MANIFEST.in {% endif %}",
     "{% if not cookiecutter.use_pylint %} .pylintrc {% endif %}",
     "{% if not cookiecutter.use_tox %} tox.ini {% endif %}",
+    "{% if not cookiecutter.use_pre_commit%} .pre-commit-config.yaml {% endif %}",
     "{% if not cookiecutter.versioning == 'calver' %} .bumpversion.cfg {% endif %}",
     "{% if not cookiecutter.versioning == 'calver' %} bump_calver_build.sh {% endif %}",
     "{% if cookiecutter.use_gotask and not cookiecutter.use_poetry %} taskfiles/poetry.yml {% endif %}",
@@ -24,6 +26,7 @@ REMOVE_PATHS = [
     "{% if cookiecutter.use_gotask and not cookiecutter.use_mypy %} taskfiles/mypy.yml {% endif %}",
     "{% if cookiecutter.use_gotask and not cookiecutter.use_black %} taskfiles/black.yml {% endif %}",
     "{% if cookiecutter.use_gotask and not cookiecutter.use_tox %} taskfiles/tox.yml {% endif %}",
+    "{% if cookiecutter.use_gotask and not cookiecutter.use_pre_commit %} taskfiles/pre-commit.yml {% endif %}",
 ]
 
 

@@ -5,6 +5,7 @@ vars:
   CODE_DIRS: src/ tests/
   PYTHON: python3
   PYTHON_VERSION: 3.10
+  SET_VENV: {% if cookiecutter.use_poetry %}poetry run{% endif %}
 
 includes:
 {%- if cookiecutter.use_poetry %}
@@ -21,7 +22,7 @@ includes:
 {% endif %}
 {%- if cookiecutter.use_mkdocs %}
   docs:
-    taskfile: ./taskfiles/docs.yml
+    taskfile: ./taskfiles/mkdocs.yml
 {% endif %}
 {%- if cookiecutter.use_ruff %}
   ruff:
@@ -43,33 +44,33 @@ includes:
   tox:
     taskfile: ./taskfiles/tox.yml
 {% endif %}
+{%- if cookiecutter.use_pre_commit %}
+  pre-commit:
+    taskfile: ./taskfiles/pre-commit.yml
+{% endif %}
 
 tasks:
   bash_version:
     desc: Check bash version
     cmds:
       - bash --version
-{% if cookiecutter.use_poetry %}
+
   default:
     cmds:
-      - task: poetry:version
+      - {% if cookiecutter.use_poetry %}task: poetry:env-info{% else %}pip --version{% endif %}
     silent: true
 
   install:
     desc: Install required dependencies
     cmds:
+{%- if cookiecutter.use_poetry %}
       - poetry install --with dev {% if cookiecutter.use_pytest %}--with test{% endif %} {% if cookiecutter.use_mkdocs %}--with docs{% endif %}
-
-  install-only-main:
-    desc: Install required dependencies
-    cmds:
-      - poetry install --only main
-      - task: export
-
-  install-dev:
-    desc: Install required dependencies
-    cmds:
-      - poetry install --with dev
+{%- else %}
+      - python -m venv .venv && source .venv/bin/activate
+      - pip install --upgrade pip
+      - pip install -r requirements_dev.txt
+      - pip install -e .
+{%- endif %}
 
   clean:
     desc: Clean up the installed dependencies
@@ -85,28 +86,46 @@ tasks:
   update:
     desc: Update dependencies
     cmds:
+{%- if cookiecutter.use_poetry %}
       - poetry update
+{%- else %}
+      - pip install --upgrade -r requirements_dev.txt
+{%- endif %}
+
+  build:
+    desc: Build wheels
+    cmds:
+      - {% if cookiecutter.use_poetry %} poetry build {% else %} pyproject-build {% endif %}
+
+  run:
+    desc: Run the main application
+    cmds:
+      - {% if cookiecutter.use_poetry %} poetry run {% endif %} {{ cookiecutter.project_name }}
+
+{% if cookiecutter.use_poetry %}
+  install-only-main:
+    desc: Install required dependencies
+    cmds:
+      - poetry install --only main
+      - task: export
+
+  install-dev:
+    desc: Install required dependencies
+    cmds:
+      - poetry install --with dev
 
   export:
     desc: Export dependencies
     cmds:
       - poetry export -f requirements.txt --output requirements.txt --without-hashes --only main
 
-  build:
-    desc: Build wheels
-    cmds:
-      - poetry build
-  run:
-    desc: Run the main application
-    cmds:
-      - poetry run python-package
-{%- endif %}
 
-{% if cookiecutter.use_pytest %}
+  {% if cookiecutter.use_pytest %}
   install-with-test:
     desc: Install required dependencies
     cmds:
       - poetry install --with test
+  {%- endif %}
 {%- endif %}
 
   static-analysis:
@@ -136,16 +155,6 @@ tasks:
       - task: pytest:all-cov
 {%- endif %}
 
-  pre-commit-install:
-    desc: Install pre-commit hooks
-    cmds:
-{%- if cookiecutter.use_poetry and cookiecutter.use_pre_commit %}
-      - poetry run pre-commit install
-      - poetry run pre-commit install --hook-type commit-msg
-{%- else -%}
-      - echo "Pre-commit hooks are not installed"
-{%- endif %}
-
   init-git:
     desc: Initialize git repository
     cmds:
@@ -160,10 +169,11 @@ tasks:
       - task: init-git
       - task: install
 {%- if cookiecutter.use_pre_commit %}
-      - task: pre-commit-install
+      - task: pre-commit:install
 {%- endif %}
-      - task: test-suite
       - task: build
+      - task: test-suite
+      - task: default
 
 {% if cookiecutter.versioning == "semver" %}
   bump-semver-patch:

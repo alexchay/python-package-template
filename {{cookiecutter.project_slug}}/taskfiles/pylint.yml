@@ -5,4 +5,4 @@ tasks:
   check:
     desc: Lint the codebase
     cmds:
-      - poetry run pylint {{.CODE_DIRS}}
+      - set -x && {{.SET_VENV}} pylint {{.CODE_DIRS}}

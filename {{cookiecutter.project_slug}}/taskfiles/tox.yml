@@ -5,25 +5,25 @@ tasks:
   default:
     desc: Run tox
     cmds:
-      - poetry run tox -v --parallel auto
+      - set -x && {{.SET_VENV}} tox -v --parallel auto
 
   typecheck:
     desc: Run tox testenv typecheck
     cmds:
-      - poetry run tox -v -e typecheck
+      - set -x && {{.SET_VENV}} tox -v -e typecheck
 
   format:
     desc: Run tox testenv format
     cmds:
-      - poetry run tox -v -e format
+      - set -x && {{.SET_VENV}} tox -v -e format
 
   lint:
     desc: Run tox testenv line
     cmds:
-      - poetry run tox -v -e lint
+      - set -x && {{.SET_VENV}} tox -v -e lint
 
   all:
     desc: Run tox all test environments
     cmds:
-      - poetry run tox -v -e py39,py310,typecheck,format,lint --parallel
+      - set -x && {{.SET_VENV}} tox -v -e py39,py310,typecheck,format,lint --parallel
 

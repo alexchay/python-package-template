@@ -5,4 +5,4 @@ tasks:
   check:
     desc: Run linter flake8
     cmds:
-      - poetry run flake8 {{.CODE_DIRS}}
+      - set -x && {{.SET_VENV}} flake8 {{.CODE_DIRS}}

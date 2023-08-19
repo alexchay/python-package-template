@@ -1,0 +1,48 @@
+build
+pdbpp
+{%- if cookiecutter.use_pylint %}
+pylint >= 2.8.3
+{%- endif %}
+{%- if cookiecutter.use_ruff %}
+ruff >= 0.0.270
+{%- endif %}
+{%- if cookiecutter.use_flake8 %}
+flake8
+flake8-bugbear
+flake8-pyproject >= 1.2.3
+{%- endif %}
+{%- if cookiecutter.use_mypy %}
+mypy
+mypy-extensions >= 1.0.0
+types-termcolor >= 1.1.6.2
+types-setuptools
+{%- endif %}
+{%- if cookiecutter.use_black %}
+black
+{%- endif %}
+{%- if cookiecutter.use_tox %}
+tox >= 4.6.2
+{%- endif %}
+{%- if cookiecutter.use_pre_commit or cookiecutter.check_commit_syntax %}
+pre-commit >= 3.3.1
+{%- endif %}
+{%- if cookiecutter.check_commit_syntax or cookiecutter.versioning == "semver" %}
+commitizen
+{%- endif %}
+{%- if cookiecutter.versioning == "calver" %}
+bump2version
+{%- endif %}
+{% if cookiecutter.use_pytest %}
+pytest
+pytest-asyncio
+pytest-html >= 3.1.1
+pytest-cov >= 3.0.0
+pytest-custom-exit-code
+pytest-randomly
+coverage >= 6.1.2
+coverage-badge >= 1.1.0
+{%- endif %}
+{% if cookiecutter.use_mkdocs %}
+mkdocs
+mkdocs-material
+{%- endif %}

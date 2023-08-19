@@ -3,20 +3,15 @@ version: "3"
 
 tasks:
 
-  install:
-    desc: Install required dependencies
-    cmds:
-      - poetry install --with docs
-
   build:
     desc: Build docs
     cmds:
-      - poetry run mkdocs build --clean --strict
+      - set -x && {{.SET_VENV}} mkdocs build --clean --strict
 
   publish:
     desc: Publish docs to GitHub Pages
     cmds:
-      - poetry run mkdocs gh-deploy --force
+      - set -x && {{.SET_VENV}} mkdocs gh-deploy --force
 
   test:
     desc: Verify links in the docs
@@ -27,5 +22,5 @@ tasks:
   build-test:
     desc: Build and test link in the docs
     cmds:
-      - task: build-docs
-      - task: test-docs
+      - task: build
+      - task: test
