@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "python-package-template"
-version = "0.0.1"
+version = "0.1.0"
 description = "Cookiecutter template for Python cli/packages"
 authors = ["Alexander Chaikovsky <alexchay@gmail.com>"]
 readme = "README.md"
@@ -164,4 +164,3 @@ version_provider = "poetry"
 update_changelog_on_bump = true
 bump_message = "bump: version $current_version → $new_version"
 annotated_tag = false
-version_files = ["VERSION", "pyproject.toml:version"]
