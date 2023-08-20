@@ -1,5 +1,5 @@
 [build-system]
-{%- if cookiecutter.use_poetry %}
+{%- if cookiecutter.dependency_management == "poetry" %}
 # Poetry pyproject.toml: https://python-poetry.org/docs/pyproject/
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
@@ -15,7 +15,7 @@ name = "{{ cookiecutter.project_name }}"
 version = "{{ cookiecutter.version }}"
 description = "{{ cookiecutter.project_description }}"
 readme = "README.md"
-{%- if cookiecutter.use_poetry %}
+{%- if cookiecutter.dependency_management == "poetry" %}
 authors = ["{{ cookiecutter.full_name }} <{{ cookiecutter.email }}>"]
 license = "MIT"
 repository = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_name }}"
@@ -47,7 +47,7 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
-{%- if not cookiecutter.use_poetry %}
+{%- if not cookiecutter.dependency_management == "poetry" %}
 dependencies = [
     "termcolor>=1.1.0,<2",
     'importlib-metadata; python_version<"3.8"'
@@ -150,7 +150,7 @@ bump2version = "*"
 {%- endif %}
 
 {% if cookiecutter.use_pytest %}
-  {%- if cookiecutter.use_poetry %}
+  {%- if cookiecutter.dependency_management == "poetry" %}
 [tool.poetry.group.test]
 # poetry install --with test
 optional = true
@@ -180,7 +180,7 @@ test = [
 {%- endif %}
 
 {% if cookiecutter.use_mkdocs %}
-  {%- if cookiecutter.use_poetry %}
+  {%- if cookiecutter.dependency_management == "poetry" %}
 [tool.poetry.group.docs]
 # poetry install --with docs
 optional = true
@@ -197,7 +197,7 @@ docs = [
   {%- endif %}
 {%- endif %}
 
-{% if not cookiecutter.use_poetry %}
+{% if not cookiecutter.dependency_management == "poetry" %}
 [tool.setuptools]
 include-package-data = true
 
@@ -378,7 +378,7 @@ exclude = '''
 name = "cz_conventional_commits"
 tag_format = "v$version"
 version_scheme = "pep440"
-version_provider = "{% if cookiecutter.use_poetry %}poetry{% else %}pep621{% endif %}"
+version_provider = "{% if cookiecutter.dependency_management == "poetry" %}poetry{% else %}pep621{% endif %}"
 update_changelog_on_bump = true
 bump_message = "bump: version $current_version → $new_version"
 annotated_tag = false

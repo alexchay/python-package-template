@@ -5,10 +5,10 @@ vars:
   CODE_DIRS: src/ tests/
   PYTHON: python3
   PYTHON_VERSION: 3.10
-  SET_VENV: {% if cookiecutter.use_poetry %}poetry run{% endif %}
+  SET_VENV: {% if cookiecutter.dependency_management == "poetry" %}poetry run{% endif %}
 
 includes:
-{%- if cookiecutter.use_poetry %}
+{%- if cookiecutter.dependency_management == "poetry" %}
   poetry:
     taskfile: ./taskfiles/poetry.yml
 {% endif %}
@@ -57,13 +57,13 @@ tasks:
 
   default:
     cmds:
-      - {% if cookiecutter.use_poetry %}task: poetry:env-info{% else %}pip --version{% endif %}
+      - {% if cookiecutter.dependency_management == "poetry" %}task: poetry:env-info{% else %}pip --version{% endif %}
     silent: true
 
   install:
     desc: Install required dependencies
     cmds:
-{%- if cookiecutter.use_poetry %}
+{%- if cookiecutter.dependency_management == "poetry" %}
       - poetry install --with dev {% if cookiecutter.use_pytest %}--with test{% endif %} {% if cookiecutter.use_mkdocs %}--with docs{% endif %}
 {%- else %}
       - python -m venv .venv && source .venv/bin/activate
@@ -86,7 +86,7 @@ tasks:
   update:
     desc: Update dependencies
     cmds:
-{%- if cookiecutter.use_poetry %}
+{%- if cookiecutter.dependency_management == "poetry" %}
       - poetry update
 {%- else %}
       - pip install --upgrade -r requirements_dev.txt
@@ -95,14 +95,14 @@ tasks:
   build:
     desc: Build wheels
     cmds:
-      - {% if cookiecutter.use_poetry %} poetry build {% else %} pyproject-build {% endif %}
+      - {% if cookiecutter.dependency_management == "poetry" %} poetry build {% else %} pyproject-build {% endif %}
 
   run:
     desc: Run the main application
     cmds:
-      - {% if cookiecutter.use_poetry %} poetry run {% endif %} {{ cookiecutter.project_name }}
+      - {% if cookiecutter.dependency_management == "poetry" %} poetry run {% endif %} {{ cookiecutter.project_name }}
 
-{% if cookiecutter.use_poetry %}
+{% if cookiecutter.dependency_management == "poetry" %}
   install-only-main:
     desc: Install required dependencies
     cmds:

@@ -13,7 +13,10 @@
     "version": "{% if cookiecutter.versioning == 'calver' %}2023.01.01.0{% else %}0.1.0{% endif %}",
     "add_vscode_settings": false,
     "use_gotask": false,
-    "use_poetry": true,
+    "dependency_management": [
+        "poetry",
+        "pip"
+    ],
     "use_pytest": true,
     "use_mkdocs": true,
     "use_pylint": false,
