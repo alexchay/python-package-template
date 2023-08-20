@@ -1,0 +1,46 @@
+{
+  "cookiecutter": {
+    "full_name": "Alexander Chaykovskiy",
+    "email": "alexchay@gmail.com",
+    "github_username": "alexchay",
+    "project_name": "python-package",
+    "project_slug": "python_package",
+    "project_description": "Python Boilerplate contains all the boilerplate you need to create a Python package.",
+    "pypi_username": "alexchay",
+    "versioning": "semver",
+    "version": "0.1.0",
+    "add_vscode_settings": true,
+    "_template": "../Templates/python_package_template",
+    "_output_dir": "/home/alexac/_vscode/_workspaces/Devel/Python/Test",
+    "_repo_dir": "../Templates/python_package_template",
+    "use_gotask": true,
+    "dependency_management": "poetry", 
+    "use_pytest": true,
+    "use_pylint": true,
+    "use_mkdocs": true,
+    "use_ruff": true,
+    "use_flake8": true,
+    "use_mypy": true,
+    "use_black": true,
+    "use_tox": true,
+    "use_pre_commit": true,
+    "check_commit_syntax": true,
+    "minimal_python_version": "3.9",
+    "max_line_length": 140,
+    "_copy_without_render": [
+      "taskfiles"
+    ]
+  },
+  "_cookiecutter": {
+    "full_name": "Alexander Chaykovskiy",
+    "email": "alexchay@gmail.com",
+    "github_username": "alexchay",
+    "project_name": "python-package",
+    "project_slug": "python_package",
+    "project_description": "Python Boilerplate contains all the boilerplate you need to create a Python package.",
+    "pypi_username": "alexchay",
+    "version": "0.1.0",
+    "add_vscode_settings": true,
+    "use_gotask": true
+  }
+}
