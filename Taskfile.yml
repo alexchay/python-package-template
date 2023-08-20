@@ -2,10 +2,9 @@
 version: "3"
 
 vars:
-  CODE_DIRS: src/ tests/
+  CODE_DIRS: \{\{cookiecutter.project_slug\}\}/src/ \{\{cookiecutter.project_slug\}\}/tests/
   PYTHON: python3
   PYTHON_VERSION: 3.10
-
 
 tasks:
   default:
@@ -35,26 +34,19 @@ tasks:
   install:
     desc: Install required dependencies
     cmds:
-      - poetry install --with dev --with test --with docs
-      - task: export
+      - poetry install --with dev
 
   install_only_main:
     desc: Install required dependencies
     cmds:
       - poetry install --only main
-      - task: export
 
-  install_with_dev:
+  install-dev:
     desc: Install required dependencies
     cmds:
       - poetry install --with dev
 
-  install_with_test:
-    desc: Install required dependencies
-    cmds:
-      - poetry install --with test
-
-  install_with_docs:
+  install-docs:
     desc: Install required dependencies
     cmds:
       - poetry install --with docs
@@ -79,54 +71,6 @@ tasks:
     desc: Export dependencies
     cmds:
       - poetry export -f requirements.txt --output requirements.txt --without-hashes --only main
-
-  build:
-    desc: Build wheels
-    cmds:
-      - poetry build
-      # - pyproject-build
-
-  run:
-    desc: Run the main application
-    cmds:
-      - poetry run python-package
-
-  publish:
-    desc: Build and publish wheels and sdist to PyPi
-    cmds:
-      - poetry publish --build -u __token__ -p ${PYPI_TOKEN}
-
-  pytest:
-    desc: Run tests
-    cmds:
-      - poetry run pytest tests -vv -s --lf -x -l --import-mode prepend --cov=src --cov-report=term-missing --cov-report=html --cov-report=xml --cov-fail-under=80 --cov-branch
-
-  tox:
-    desc: Run tox
-    cmds:
-      - poetry run tox -v --parallel auto
-      # - poetry run tox -- -vv -s --lf -x -l --cov=src --cov-report=term-missing --cov-report=html --cov-report=xml --cov-fail-under=80 --cov-branch
-
-  tox-typecheck:
-    desc: Run tox testenv typecheck
-    cmds:
-      - poetry run tox -v -e typecheck
-
-  tox-format:
-    desc: Run tox testenv format
-    cmds:
-      - poetry run tox -v -e format
-
-  tox-lint:
-    desc: Run tox testenv line
-    cmds:
-      - poetry run tox -v -e lint
-
-  tox-all:
-    desc: Run tox all test environments
-    cmds:
-      - poetry run tox -v -e py39,py310,typecheck,format,lint --parallel
-
 
   mypy:
     desc: Run static type checker mypy
@@ -197,23 +141,12 @@ tasks:
     desc: Run all tests
     cmds:
       - task: static-analysis
-      - task: pytest
 
   pre-commit-install:
     desc: Install pre-commit hooks
     cmds:
       - poetry run pre-commit install
       - poetry run pre-commit install --hook-type commit-msg
-
-  bump-calver:
-    desc: Bump Cal version
-    cmds:
-      - ./bump_calver_build.sh
-
-  bump-semver:
-    desc: Bump Sem version
-    cmds:
-      - ./bump_semver_patch.sh
 
   bump-semver-patch:
     desc: Bump Patch of SemVer

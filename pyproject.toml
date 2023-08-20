@@ -1,45 +1,3 @@
-# [build-system]
-# requires = ["setuptools", "wheel", "cython"]
-# build-backend = "setuptools.build_meta"
-
-[project]
-name = "python-package-template"
-version = "0.0.1"
-description = "Cookiecutter template for Python cli/packages"
-authors = [{ email = "alexchay@gmail.com" }, { name = "Alexander Chaikovsky" }]
-# Pypi classifiers: https://pypi.org/classifiers/
-classifiers = [
-    "Development Status :: 4 - Beta",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Topic :: Software Development :: Libraries :: Python Modules",
-    "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
-]
-readme = "README.md"
-keywords = [
-    "python",
-    "package",
-    "project",
-    "template",
-    "poetry",
-    "cookiecutter",
-]
-requires-python = ">=3.9"
-license = { file = "LICENSE", name = "MIT" }
-
-[project.urls]
-homepage = "https://alexchay.github.io/"
-repository = "https://github.com/alexchay/python-package-template"
-
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
-
 [tool.poetry]
 name = "python-package-template"
 version = "0.0.1"
@@ -47,7 +5,7 @@ description = "Cookiecutter template for Python cli/packages"
 authors = ["Alexander Chaikovsky <alexchay@gmail.com>"]
 readme = "README.md"
 license = "MIT"
-homepage = "https://alexchay.github.io/"
+homepage = "https://github.com/alexchay/python-package-template"
 repository = "https://github.com/alexchay/python-package-template"
 keywords = [
     "python",
@@ -69,18 +27,12 @@ classifiers = [
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
 ]
-packages = [{ include = "package_name", from = "src" }]
-
-
-[tool.poetry.scripts]
-python-package = "package_name.main:main"
 
 
 [tool.poetry.dependencies]
 # main dependency group
 # poetry install --only main
 python = "^3.9"
-colorama = "^0.4.6"
 
 
 [tool.poetry.group.dev]
@@ -90,8 +42,6 @@ optional = true
 pylint = "^2.8.3"
 ruff = "^0.0.270"
 commitizen = "*"
-bump2version = "*"
-bpython = "*"
 pdbpp = "*"
 flake8 = "*"
 flake8-bugbear = "*"
@@ -100,13 +50,8 @@ mypy = "*"
 mypy-extensions = "^1.0.0"
 types-termcolor = "^1.1.6.2"
 black = { version = "*", allow-prereleases = true }
-rope = "*"
 types-setuptools = "*"
 pre-commit = "^3.3.1"
-tox = "^4.6.2"
-cookiecutter = "^2.1.1"
-build = "^0.10.0"
-
 
 [tool.poetry.group.docs]
 # poetry install --with docs
@@ -114,63 +59,6 @@ optional = true
 [tool.poetry.group.docs.dependencies]
 mkdocs = "*"
 mkdocs-material = "*"
-
-
-[tool.poetry.group.test]
-# poetry install --with test
-optional = true
-[tool.poetry.group.test.dependencies]
-pytest = "*"
-pytest-asyncio = "*"
-pytest-html = "^3.1.1"
-pytest-cov = "^3.0.0"
-pytest-custom-exit-code = "*"
-pytest-randomly = "^3.13.0"
-coverage = "^6.1.2"
-coverage-badge = "^1.1.0"
-
-[tool.pytest.ini_options]
-# https://docs.pytest.org/en/6.2.x/customize.html#pyproject-toml
-# Directories that are not visited by pytest collector:
-norecursedirs = [
-    "{{ cookiecutter.project_name }}",
-    "hooks",
-    "*.egg",
-    ".eggs",
-    "dist",
-    "build",
-    "docs",
-    ".tox",
-    ".git",
-    "__pycache__",
-]
-doctest_optionflags = [
-    "NUMBER",
-    "NORMALIZE_WHITESPACE",
-    "IGNORE_EXCEPTION_DETAIL",
-]
-# Extra options:
-addopts = [
-    "-vv",
-    "--import-mode=prepend",
-    "--disable-pytest-warnings",
-    "--strict-markers",
-    "--tb=short",
-]
-testpaths = ["tests"]
-markers = [
-    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
-    "mymarker: my custom marker",
-]
-
-[tool.coverage.run]
-branch = true
-source = ["src", "tests"]
-
-[tool.coverage.report]
-fail_under = 50
-show_missing = true
-skip_covered = true
 
 
 [tool.mypy]

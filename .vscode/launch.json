@@ -11,19 +11,6 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal"
-        },
-        {
-            "name": "Debug in Development Environment",
-            "type": "python",
-            "request": "launch",
-            "program": "${workspaceFolder}/main.py",
-            "console": "integratedTerminal",
-            "cwd": "${workspaceFolder}/",
-            "justMyCode": false,
-            "envFile": "${workspaceFolder}/.env_dev",
-            "args": [
-                "-vvvv",
-            ]
         }
     ]
 }

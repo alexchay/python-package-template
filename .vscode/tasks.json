@@ -4,58 +4,9 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Run in Development Environment",
-            "type": "shell",
-            "command": "cd ${workspaceFolder} && source .venv/bin/activate && export `cat .env_dev` && python main.py",
-            "presentation": {
-                "reveal": "always",
-                "focus": true,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            }
-        },
-        {
-            "label": "Run Production Environment",
-            "type": "shell",
-            "command": "cd ${workspaceFolder} && source .venv/bin/activate && export `cat .env_prod` && python main.py",
-            "presentation": {
-                "reveal": "always",
-                "focus": true,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            }
-        },
-        {
             "label": "Print current project folder",
             "type": "shell",
             "command": "echo ${fileWorkspaceFolder}"
-        },
-        {
-            "label": "Pytest: run tests in file",
-            "type": "shell",
-            "command": "cd ${fileWorkspaceFolder} && poetry run pytest ${file} -vv -s --lf -x -l",
-            "presentation": {
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "isBackground": false,
-        },
-        {
-            "label": "Pytest: run all tests",
-            "type": "shell",
-            "command": "cd ${fileWorkspaceFolder} && poetry run pytest tests/ -vv -s --lf -x -l",
-            "presentation": {
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            }
         }
     ]
 }

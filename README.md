@@ -26,14 +26,8 @@ task install
 task pre-commit-install
 ```
 
-
 #### Bump "SemVer "version
 ```shell
 task bump-semver-patch
 task bump-semver-minor
-```
-
-#### Bump "CalVer "version
-```shell
-task bump-calver
 ```
