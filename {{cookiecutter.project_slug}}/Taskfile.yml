@@ -93,7 +93,7 @@ tasks:
 {%- endif %}
 
   build:
-    desc: Build wheels
+    desc: Build package
     cmds:
       - {% if cookiecutter.dependency_management == "poetry" %} poetry build {% else %} pyproject-build {% endif %}
 
@@ -101,6 +101,17 @@ tasks:
     desc: Run the main application
     cmds:
       - {% if cookiecutter.dependency_management == "poetry" %} poetry run {% endif %} {{ cookiecutter.project_name }}
+
+  publish:
+    desc: Build and publish wheels and sdist to PyPi
+    cmds:
+      - {% if cookiecutter.dependency_management == "poetry" %} poetry publish --build {% else %} twine upload dist/* {% endif %} -u __token__ -p ${PYPI_TOKEN}
+
+  publish-test:
+    desc: Build and publish wheels and sdist to Test PyPi
+    cmds:
+      - {% if cookiecutter.dependency_management == "poetry" %} poetry publish --build -r test-pypi {% else %} twine upload -r testpypi dist/* {% endif %} -u __token__ -p ${PYPI_TEST_TOKEN}
+
 
 {% if cookiecutter.dependency_management == "poetry" %}
   install-only-main:

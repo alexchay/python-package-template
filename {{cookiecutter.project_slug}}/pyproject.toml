@@ -65,6 +65,7 @@ homepage = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutte
 # pip install .[dev]
 dev = [
     "build",
+    "twine >= 1.15.0",
     "pdbpp",
     {%- if cookiecutter.use_pylint %}
     "pylint >= 2.8.3",
