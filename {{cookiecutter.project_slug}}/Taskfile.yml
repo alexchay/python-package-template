@@ -68,7 +68,7 @@ tasks:
 {%- else %}
       - python -m venv .venv && source .venv/bin/activate
       - pip install --upgrade pip
-      - pip install -r requirements_dev.txt
+      - pip install .[dev] {% if cookiecutter.use_pytest %}.[test]{% endif %} {% if cookiecutter.use_mkdocs %}.[docs]{% endif %}
       - pip install -e .
 {%- endif %}
 
