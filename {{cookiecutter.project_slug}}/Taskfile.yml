@@ -121,7 +121,7 @@ tasks:
 
 
   {% if cookiecutter.use_pytest %}
-  install-with-test:
+  install-test:
     desc: Install required dependencies
     cmds:
       - poetry install --with test
